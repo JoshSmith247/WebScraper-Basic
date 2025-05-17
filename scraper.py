@@ -1,3 +1,4 @@
+###############################################################################
 #
 # Basic web scraper–– Retrieves list of 100 companies with the highest market
 # cap, scrapes prices individually.
@@ -6,6 +7,7 @@
 # 
 # @author Josh Smith
 #
+###############################################################################
 
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -48,16 +50,23 @@ for stock in stocks_to_find:
     try:
         driver.get('https://www.bing.com/search?q=' + stock + ' stock')
 
+        time.sleep(0.5)
+
         html = driver.page_source
 
         soup = BeautifulSoup(html, features="html.parser")
 
+        # Retrieve stock price
         for tag in soup.find(class_='b_focusTextMedium'):
-            print("(" + str(total + 1) + "/" + str(total_entries) + ") " + stock.capitalize() + ": " + tag.text)
+            print("(" + str(total + 1) + "/" + str(total_entries) + ") " + stock.capitalize() + ": " + tag.text, end="")
             success += 1
+        
+        # Retrieve currency type
+        for tag in soup.find(class_='price_curr'):
+            print(" " + tag.text)
 
     except:
-        print(stock.capitalize() + ": Error retrieving price")
+        print(stock.capitalize() + ": (Error retrieving)")
     
     total += 1
 
