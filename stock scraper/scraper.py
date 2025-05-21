@@ -35,7 +35,7 @@ html = driver.page_source
 
 soup = BeautifulSoup(html, features="html.parser")
 
-for tag in soup.find_all(class_='company-name'):
+for tag in soup.find_all(class_='company-name'): #company-code alt
     stocks_to_find.append(tag.text.replace("&", "and"))
 
 #print(stocks_to_find)
@@ -66,7 +66,7 @@ for stock in stocks_to_find:
             print(" " + tag.text)
 
     except:
-        print(stock.capitalize() + ": (Error retrieving)")
+        print(stock.capitalize() + ": (Error retrieving)") ## Attempt here using company code instead!
     
     total += 1
 
